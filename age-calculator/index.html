@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator - Dev</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="container">
+        <div class="calculator-div">
+            <h1>Age Calculator</h1>
+            <div id="date_container">
+                <div class="row">
+                    <label for="dob">From Date</label>
+                    <input type="date" name="dob" id="dob" required>
+                </div>
+                <div class="row">
+                    <label for="dob2">To Date</label>
+                    <input type="date" name="dob2" id="dob2" required>
+                </div>
+                <button type="button">Calculate</button>
+            </div>
+            <div id="result"></div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $today = new Date();
+            $('#dob2').val($today.toISOString().split('T')[0]);
+
+            $('button').click(function(){
+                var dob = new Date($('#dob').val());
+                var dob2 = new Date($('#dob2').val());
+                
+                if(dob && dob2){
+                    var diffYears = dob2.getFullYear() - dob.getFullYear();
+                    var diffMonths = dob2.getMonth() - dob.getMonth();
+                    var diffDays = dob2.getDate() - dob.getDate();
+                    
+                    if (diffDays < 0) {
+                        diffMonths--;
+                        diffDays += new Date(dob2.getFullYear(), dob2.getMonth(), 0).getDate();
+                    }
+                    
+                    if (diffMonths < 0) {
+                        diffYears--;
+                        diffMonths += 12;
+                    }
+                    
+                    $('#result').html('Difference: ' + diffYears + ' years, ' + diffMonths + ' months, and ' + diffDays + ' days');
+                } else {
+                    $('#result').html('Please select both dates.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
